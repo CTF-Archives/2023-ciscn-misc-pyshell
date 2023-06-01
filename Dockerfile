@@ -10,10 +10,10 @@ RUN apt-get update && \
 
 # 安装必要的python依赖库
 # RUN sage --python -m pip install pycryptodome gmpy2
-# RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pycryptodome 
+RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pwntools 
 
 # 拷贝源码和启动脚本至根目录
-COPY ./src/ /app
+COPY ./src/test.py /app/main.py
 COPY ./service/docker-entrypoint.sh /
 
 EXPOSE 9999

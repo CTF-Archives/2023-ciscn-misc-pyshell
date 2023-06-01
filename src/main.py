@@ -1,5 +1,6 @@
 import socket
 import threading
+import asyncio
 
 
 class Service(threading.Thread):
@@ -7,11 +8,12 @@ class Service(threading.Thread):
     def __init__(self, port):
         threading.Thread.__init__(self)
         self.port = port
-        self.sock = socket.create_server(("0.0.0.0", port))
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.settimeout(2)
+        
 
     def run(self):
+        self.sock = socket.create_server(("0.0.0.0", self.port),reuse_port=True)
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client.settimeout(2)
         print("listener started")
         self.client.connect(("127.0.0.1", 12345))
         rabbish = self.client.recv(1024)
