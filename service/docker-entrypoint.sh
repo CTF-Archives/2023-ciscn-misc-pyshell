@@ -22,4 +22,4 @@ fi
 
 python3 /app/main.py &
 
-socat -t 10000 TCP4-LISTEN:12345,reuseaddr,fork EXEC:"python3 -i",stderr
+socat -t 99999 TCP4-LISTEN:12345,reuseaddr,fork EXEC:"python3 -i",setsid,stderr

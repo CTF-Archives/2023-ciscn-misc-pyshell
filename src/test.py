@@ -48,7 +48,7 @@ class Task(socketserver.BaseRequestHandler):
     
     def client_init(self):
         self.client = pwn.remote("127.0.0.1",12345)
-        self.client.settimeout(2)
+        self.client.settimeout(99999)
         rabbish = self.client.recv(1024)
         while not rabbish.decode().strip().endswith('>>>'):
             rabbish = self.client.recv(1024)
@@ -66,7 +66,8 @@ class Task(socketserver.BaseRequestHandler):
             print("recv:"+str(msg))
             if not msg :
                 self.nulltime+=1
-                if self.nulltime==5:
+                if self.nulltime==30:
+                    print("Nulltime == 30")
                     break
                 continue
             elif is_validate(msg.decode().strip()):
@@ -81,7 +82,6 @@ class Task(socketserver.BaseRequestHandler):
             else:
                 self.nulltime=0
                 self.send(b'nop')
-                self.client.close()
 
 
 class ThreadedServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
